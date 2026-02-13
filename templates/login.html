@@ -2,26 +2,44 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<title>ログイン</title>
+<title>喫茶店 在庫管理 ログイン</title>
 <script src="https://cdn.tailwindcss.com"></script>
+
+<style>
+  body {
+    background-image: url("https://images.unsplash.com/photo-1495474472287-4d71bcdd2085");
+    background-size: cover;
+    background-position: center;
+  }
+</style>
 </head>
 
-<body class="bg-gray-100 flex items-center justify-center h-screen">
+<body class="flex items-center justify-center h-screen bg-black/40">
 
-<div class="bg-white p-8 rounded shadow w-80">
-  <h1 class="text-xl font-bold mb-4 text-center">☕ 喫茶店 在庫管理 ログイン</h1>
+<div class="bg-white/90 backdrop-blur-md p-10 rounded-2xl shadow-2xl w-96 border border-gray-200">
+
+  <h1 class="text-2xl font-serif font-bold mb-6 text-center text-brown-700">
+    ☕ 喫茶吉田
+  </h1>
 
   <form method="post" class="space-y-4">
-    <input type="text" name="name" placeholder="ユーザー名"
-           class="border w-full p-2 rounded">
-           
-    <input type="password" name="password" placeholder="パスワード"
-           class="border w-full p-2 rounded">
 
-    <button class="bg-blue-600 text-white w-full py-2 rounded hover:bg-blue-700">
+    <input type="text" name="name" placeholder="ユーザー名"
+           class="border w-full p-3 rounded focus:outline-none focus:ring-2 focus:ring-amber-500">
+
+    <input type="password" name="password" placeholder="パスワード"
+           class="border w-full p-3 rounded focus:outline-none focus:ring-2 focus:ring-amber-500">
+
+    <button class="bg-amber-700 text-white w-full py-2 rounded-lg hover:bg-amber-800 transition">
       ログイン
     </button>
+
   </form>
+
+  <p class="text-xs text-center text-gray-500 mt-4">
+    Coffee Stock Management System
+  </p>
+
 </div>
 
 </body>
