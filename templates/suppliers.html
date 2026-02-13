@@ -16,16 +16,16 @@
 
 <table class="mt-4 bg-white shadow rounded w-full border border-gray-300 border-collapse">
 <tr class="bg-gray-200">
-  <th class="p-2 border">仕入れ先名</th>
-  <th class="p-2 border">メモ</th>
-  <th class="p-2 border">操作</th>
+  <th class="p-2 border border-gray-300">仕入れ先名</th>
+  <th class="p-2 border border-gray-300">メモ</th>
+  <th class="p-2 border border-gray-300">操作</th>
 </tr>
 
 {% for s in suppliers %}
 <tr>
-  <td class="p-2 border">{{ s.name }}</td>
-  <td class="p-2 border">{{ s.note }}</td>
-  <td class="p-2 border">
+  <td class="p-2 border border-gray-300">{{ s.name }}</td>
+  <td class="p-2 border border-gray-300">{{ s.note }}</td>
+  <td class="p-2 border border-gray-300">
     <form action="/suppliers/delete/{{ s.id }}" method="post">
       <button class="text-red-600">削除</button>
     </form>
