@@ -1,6 +1,11 @@
 {% extends "base.html" %}
 {% block content %}
 
+<a href="{{ url_for('dashboard') }}" 
+   class="bg-gray-500 text-white px-4 py-2 rounded shadow hover:bg-gray-600 mb-4 inline-block">
+   ← トップに戻る
+</a>
+
 <h1 class="text-2xl font-bold mb-4">👩‍🍳 スタッフ管理</h1>
 
 <a href="/users/add" class="bg-amber-700 text-white px-4 py-2 rounded">
