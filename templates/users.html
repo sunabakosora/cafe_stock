@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1 class="text-2xl font-bold mb-4">👩‍🍳 スタッフ管理</h1>
+
+<a href="/users/add" class="bg-amber-700 text-white px-4 py-2 rounded">
+  ＋ 新規スタッフ追加
+</a>
+
+<table class="mt-4 bg-white shadow rounded w-full border border-gray-300">
+  <tr class="bg-gray-200">
+    <th class="p-2 border border-gray-300">名前</th>
+    <th class="p-2 border border-gray-300">権限</th>
+  </tr>
+
+  {% set role_labels = {'owner': '店主', 'staff': 'アルバイト'} %}
+
+  {% for u in users %}
+  <tr class="hover:bg-amber-50">
+    <td class="p-2 border border-gray-300">{{ u.name }}</td>
+    <td class="p-2 border border-gray-300">
+      {{ role_labels.get(u.role, u.role) }}
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+
+{% endblock %}

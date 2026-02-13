@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="bg-amber-800 text-white p-6 rounded-2xl shadow mb-6">
+  <h1 class="text-3xl font-bold">☕ 在庫管理台帳</h1>
+  <p class="text-sm opacity-80 mt-1">
+    今日もお疲れさまです、{{ session.user_name }}さん
+  </p>
+</div>
+
+
+{% if low_items %}
+<div class="bg-rose-50 border-l-4 border-rose-600 text-rose-800 p-4 mb-6 rounded shadow">
+  <p class="font-bold text-lg">⚠ 不足のアイテム！</p>
+  <ul class="list-disc ml-6 mt-2">
+    {% for item in low_items %}
+      <li>
+        {{ item.name }} {{ item.shortage | int }}{{ item.unit }}
+        {% if item.buyer_name %}
+          ： {{ item.purchase_status }} ({{ item.buyer_name }})
+        {% else %}
+          ： 買出し予定なし
+          <button onclick="document.getElementById('purchase-modal-{{ item.id }}').classList.remove('hidden')"
+                  class="bg-amber-600 hover:bg-amber-700 text-white px-2 py-1 rounded ml-2">担当者登録</button>
+
+          <!-- モーダル -->
+          <div id="purchase-modal-{{ item.id }}" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+            <div class="bg-white p-6 rounded shadow w-80 relative">
+              <h3 class="text-lg font-bold mb-4">{{ item.name }} 買出し担当者</h3>
+              <form action="/purchase_plan/add/{{ item.id }}" method="post" class="space-y-3">
+                
+                <!-- 担当者はログインユーザー固定 -->
+                <input type="hidden" name="user_id" value="{{ session.user_id }}">
+
+                <label>数量（任意）</label>
+                <input type="number" name="qty" value="1" class="border w-full p-1">
+
+                <div class="flex justify-end gap-2 mt-3">
+                  <button type="button" onclick="document.getElementById('purchase-modal-{{ item.id }}').classList.add('hidden')"
+                          class="px-3 py-1 border rounded">キャンセル</button>
+                  <button type="submit" class="bg-blue-500 text-white px-3 py-1 rounded">登録</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        {% endif %}
+      </li>
+    {% endfor %}
+  </ul>
+</div>
+{% endif %}
+
+<table class="bg-white shadow rounded w-full">
+<tr class="bg-gray-200">
+  <th class="p-2 border border-gray-300">商品</th>
+  <th class="p-2 border border-gray-300">在庫数</th>
+  <th class="p-2 border border-gray-300">最低在庫</th>
+  <th class="p-2 border border-gray-300">操作</th>
+</tr>
+
+{% for item in items %}
+<tr class="{% if item.stock < item.min_stock %}bg-red-200{% endif %}">
+  <td class="p-2 border border-gray-300">{{ item.name }}</td>
+  <td class="p-2 font-bold border border-gray-300">{{ item.stock | int }}</td>
+  <td class="p-2 border border-gray-300">{{ item.min_stock | int }}</td>
+  <td class="p-2 flex gap-2 border border-gray-300">
+
+    <!-- 入庫ボタン -->
+    <button onclick="document.getElementById('in-modal-{{ item.id }}').classList.remove('hidden')" 
+            class="bg-emerald-700 hover:bg-emerald-800 text-white px-2 rounded">入庫</button>
+
+    <div id="in-modal-{{ item.id }}" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+      <div class="bg-white p-6 rounded shadow w-80 relative">
+        <h3 class="text-lg font-bold mb-4">{{ item.name }} 入庫</h3>
+        <form action="/stock_in/{{ item.id }}" method="post" class="space-y-3">
+          <label>数量</label>
+          <input type="number" name="qty" value="1" class="border w-full p-1">
+          <label>仕入れ先</label>
+          <select name="supplier_id" class="border w-full p-1">
+            {% for supplier in suppliers %}
+              <option value="{{ supplier.id }}">{{ supplier.name }}</option>
+            {% endfor %}
+          </select>
+          <div class="flex justify-end gap-2 mt-3">
+            <button type="button" onclick="document.getElementById('in-modal-{{ item.id }}').classList.add('hidden')"
+                    class="px-3 py-1 border rounded">キャンセル</button>
+            <button type="submit" class="bg-green-500 text-white px-3 py-1 rounded">登録</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- 出庫ボタン -->
+    <button onclick="document.getElementById('out-modal-{{ item.id }}').classList.remove('hidden')" 
+            class="bg-amber-700 hover:bg-amber-800 text-white px-2 rounded">出庫</button>
+
+    <div id="out-modal-{{ item.id }}" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+      <div class="bg-white p-6 rounded shadow w-80 relative">
+        <h3 class="text-lg font-bold mb-4">{{ item.name }} 出庫</h3>
+        <form action="/stock_out/{{ item.id }}" method="post" class="space-y-3">
+          <label>数量</label>
+          <input type="number" name="qty" value="1" class="border w-full p-1">
+          <label>区分</label>
+          <select name="out_type" class="border w-full p-1">
+            <option value="出庫">出庫</option>
+            <option value="廃棄">廃棄</option>
+          </select>
+          <div class="flex justify-end gap-2 mt-3">
+            <button type="button" onclick="document.getElementById('out-modal-{{ item.id }}').classList.add('hidden')"
+                    class="px-3 py-1 border rounded">キャンセル</button>
+            <button type="submit" class="bg-blue-500 text-white px-3 py-1 rounded">登録</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+  </td>
+</tr>
+{% endfor %}
+
+</table>
+
+{% endblock %}

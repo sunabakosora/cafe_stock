@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block content %}
+
+<a href="{{ url_for('dashboard') }}" 
+   class="bg-gray-500 text-white px-4 py-2 rounded shadow hover:bg-gray-600 mb-4 inline-block">
+   ← トップに戻る
+</a>
+
+<h2 class="text-2xl font-bold mb-4">在庫履歴</h2>
+
+<table class="w-full bg-white shadow rounded border border-gray-300 border-collapse">
+<tr class="bg-gray-200">
+    <th class="p-2 border border-gray-300">日付</th>
+    <th class="p-2 border border-gray-300">商品</th>
+    <th class="p-2 border border-gray-300">数量</th>
+    <th class="p-2 border border-gray-300">区分</th>
+    <th class="p-2 border border-gray-300">仕入れ先</th>
+    <th class="p-2 border border-gray-300">担当者</th>
+</tr>
+
+{% for log in logs %}
+<tr>
+    <td class="p-2 border border-gray-300">{{ log.created_at[:10] }}</td>
+    <td class="p-2 border border-gray-300">{{ log.item_name }}</td>
+    <td class="p-2 border border-gray-300">{{ log.quantity | int }}</td>
+
+    <!-- 区分の色分け -->
+    <td class="p-2 border border-gray-300
+        {% if log.change_type == 'IN' %}text-green-600
+        {% elif log.note == '出庫' %}text-blue-600
+        {% elif log.note == '廃棄' %}text-red-600
+        {% else %}text-gray-600{% endif %}">
+        {% if log.change_type == 'IN' %}
+            入庫
+        {% else %}
+            {{ log.note }}  {# '出庫' か '廃棄' #}
+        {% endif %}
+    </td>
+
+    <td class="p-2 border border-gray-300">{{ log.supplier_name if log.supplier_name else '' }}</td>
+    <td class="p-2 border border-gray-300">{{ log.user_name }}</td>
+</tr>
+{% endfor %}
+
+</table>
+
+{% endblock %}

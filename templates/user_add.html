@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1 class="text-xl font-bold mb-4">☕ 新規スタッフ登録</h1>
+
+<form method="post" class="bg-white p-6 rounded shadow w-96 space-y-3">
+
+  <label>名前</label>
+  <input name="name" class="border p-2 w-full">
+
+  <label>パスワード</label>
+  <input type="password" name="password" class="border p-2 w-full">
+
+  <label>権限</label>
+  <select name="role" class="border p-2 w-full">
+    <option value="staff">スタッフ</option>
+    <option value="admin">管理者</option>
+  </select>
+
+  <button class="bg-amber-700 text-white px-4 py-2 rounded w-full">登録</button>
+</form>
+
+{% endblock %}

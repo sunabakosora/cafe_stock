@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1 class="text-xl font-bold mb-4">☕ 仕入れ先追加</h1>
+
+<form method="post" class="bg-white p-4 shadow rounded w-96 space-y-2">
+  <label>仕入れ先名</label>
+  <input name="name" class="border p-2 w-full">
+
+  <label>メモ（取引条件など）</label>
+  <textarea name="note" class="border p-2 w-full"></textarea>
+
+  <button class="bg-amber-700 text-white px-4 py-2 rounded w-full">
+    登録
+  </button>
+</form>
+
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+
+<a href="{{ url_for('dashboard') }}" 
+   class="bg-gray-500 text-white px-4 py-2 rounded shadow hover:bg-gray-600 mb-4 inline-block">
+   ← トップに戻る
+</a>
+
+<h2 class="text-2xl font-bold mb-4">商品登録</h2>
+
+
+<form method="post" class="bg-white p-6 shadow rounded w-96">
+
+<label class="block mb-2">商品名</label>
+<input name="name" class="border p-2 w-full mb-4">
+
+<label class="block mb-2">単位</label>
+<input name="unit" class="border p-2 w-full mb-4">
+
+<label class="block mb-2">最低在庫</label>
+<input name="min_stock" type="number" class="border p-2 w-full mb-4">
+
+<button class="bg-blue-500 text-white px-4 py-2 rounded">
+登録
+</button>
+
+</form>
+
+{% endblock %}

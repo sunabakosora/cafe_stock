@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1 class="text-2xl font-bold mb-4">🚚 仕入れ先管理</h1>
+
+<a href="/suppliers/add" class="bg-amber-700 text-white px-3 py-1 rounded">
+  ＋ 新規追加
+</a>
+
+<table class="mt-4 bg-white shadow rounded w-full border">
+<tr class="bg-gray-200">
+  <th class="p-2 border">仕入れ先名</th>
+  <th class="p-2 border">メモ</th>
+  <th class="p-2 border">操作</th>
+</tr>
+
+{% for s in suppliers %}
+<tr>
+  <td class="p-2 border">{{ s.name }}</td>
+  <td class="p-2 border">{{ s.note }}</td>
+  <td class="p-2 border">
+    <form action="/suppliers/delete/{{ s.id }}" method="post">
+      <button class="text-red-600">削除</button>
+    </form>
+  </td>
+</tr>
+{% endfor %}
+</table>
+
+{% endblock %}
